@@ -73,11 +73,12 @@
 	},
 	"overrides": [
 		{
-			"files": ["src/app/**/*.ts?(x)"],
+			"files": ["src/app/**/*.ts?(x)", "tailwind.config.ts"],
 			"rules": {
 				"import/no-default-export": "off"
 			}
 		}
 	],
-	"ignorePatterns": ["*.js", "*.jsx"]
+	"ignorePatterns": ["*.js", "*.jsx"],
+	"workingDirectories": ["<rootDir>/src"]
 }
