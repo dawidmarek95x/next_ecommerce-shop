@@ -38,7 +38,7 @@ export const ActiveLink = <T extends string>({
 				className,
 				isActive ? activeClassName : inactiveClassName,
 			)}
-			href={href}
+			href={href as Route<string>}
 			target={target}
 			replace={replace}
 			prefetch={prefetch}
