@@ -33,9 +33,7 @@ export const Pagination = <T extends string>({
 				{currentPage > 1 && (
 					<li className="me-2">
 						<ActiveLink
-							href={
-								`${basePath}/${(currentPage - 1).toString()}` as Route<string>
-							}
+							href={`${basePath}/${(currentPage - 1).toString()}` as Route<T>}
 							className="rounded-md border border-sky-700 bg-sky-700 px-2 py-1 text-white hover:border-sky-500 hover:bg-sky-500"
 						>
 							Previous
@@ -45,7 +43,7 @@ export const Pagination = <T extends string>({
 				{pages.map((page, idx) => (
 					<li key={idx} className={`me-2 ${page === endPage && "me-0"}`}>
 						<ActiveLink
-							href={`${basePath}/${page.toString()}` as Route<string>}
+							href={`${basePath}/${page.toString()}` as Route<T>}
 							className="rounded-md border border-sky-700 px-2 py-1 hover:bg-sky-700 hover:text-white"
 							activeClassName="bg-sky-700 text-white"
 							inactiveClassName="bg-white text-sky-700"
@@ -57,9 +55,7 @@ export const Pagination = <T extends string>({
 				{currentPage < totalPages && (
 					<li className="ms-2">
 						<ActiveLink
-							href={
-								`${basePath}/${(currentPage + 1).toString()}` as Route<string>
-							}
+							href={`${basePath}/${(currentPage + 1).toString()}` as Route<T>}
 							className="rounded-md border border-sky-700 bg-sky-700 px-2 py-1 text-white hover:border-sky-500 hover:bg-sky-500"
 						>
 							Next
