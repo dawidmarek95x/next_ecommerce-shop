@@ -5,13 +5,13 @@ interface ProductCoverImageProps {
 
 export const ProductCoverImage = ({ src, alt }: ProductCoverImageProps) => {
 	return (
-		<div className="rounded-md border bg-slate-50 hover:bg-slate-100">
+		<div className="aspect-square rounded-md border bg-slate-50 hover:bg-slate-100">
 			<img
 				src={src}
 				alt={alt}
-				width={256}
-				height={256}
-				className="w-full object-contain object-center p-4 transition-transform hover:scale-105"
+				loading="lazy"
+				decoding="async"
+				className="w-100 mx-auto aspect-square object-contain object-center p-4 transition-transform hover:scale-105"
 			/>
 		</div>
 	);
