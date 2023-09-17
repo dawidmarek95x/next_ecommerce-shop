@@ -1,8 +1,14 @@
-import "./globals.scss";
+import { Poppins } from "next/font/google";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import "./globals.scss";
+import { Header } from "@/ui/organisms/Header";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({
+	weight: ["400", "500", "600", "700"],
+	style: ["normal", "italic"],
+	subsets: ["latin"],
+	display: "swap",
+});
 
 export const metadata: Metadata = {
 	title: "E-commerse shop",
@@ -17,7 +23,15 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>{children}</body>
+			<body className={poppins.className}>
+				<Header />
+				<main className="sm:py-18 mx-auto flex w-full max-w-2xl flex-grow flex-col px-8 py-12 sm:px-6 lg:max-w-7xl">
+					{children}
+				</main>
+				<footer>
+					<p className="text-center text-sm text-gray-500">© 2023</p>
+				</footer>
+			</body>
 		</html>
 	);
 }
