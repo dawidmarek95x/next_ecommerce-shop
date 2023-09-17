@@ -8,7 +8,7 @@ export const NavList = () => {
 	const inactiveClassNames = "border-transparent hover:border-gray-300";
 
 	return (
-		<ul className="flex h-16 max-w-full space-x-8 whitespace-nowrap">
+		<ul className="flex h-16 max-w-full space-x-8 whitespace-nowrap px-4 lg:px-8">
 			<li>
 				<ActiveLink
 					href="/"
