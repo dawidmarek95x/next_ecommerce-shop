@@ -20,7 +20,7 @@ export const ActiveLink = <T extends string>({
 	children: React.ReactNode;
 	className?: string;
 	exact?: boolean;
-	href: Route<T> | URL;
+	href: Route<T>;
 	inactiveClassName?: string;
 	prefetch?: boolean;
 	replace?: boolean;
