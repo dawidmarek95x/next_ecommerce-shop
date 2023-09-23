@@ -5,10 +5,11 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-		"build": "next build",
 		"start": "next start",
-		"lint": "next lint --fix --dir src",
-		"codegen": "graphql-codegen --config .graphqlrc.ts"
+		"build": "next build",
+		"codegen": "graphql-codegen --config .graphqlrc.ts",
+		"codegen:watch": "pnpm codegen --watch",
+		"lint": "next lint --fix --dir src"
 	},
 	"dependencies": {
 		"@mdx-js/loader": "^2.3.0",

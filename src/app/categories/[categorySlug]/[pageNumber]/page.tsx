@@ -17,7 +17,7 @@ const PLACEHOLDER_DESCRIPTION =
 // }) => {
 // 	const categories = await getCategories({});
 
-// 	const pages = categories.map(async (category) => {
+// 	const pages = categories?.data?.map(async (category) => {
 // 		const products = await getProductsByCategorySlug({
 // 			limit: CATEGORIES_INITIAL_SEARCH_PARAMS.LIMIT,
 // 			offset:

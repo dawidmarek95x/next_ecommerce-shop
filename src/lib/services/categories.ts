@@ -25,7 +25,10 @@ export const getCategories = async ({
 		},
 	);
 
-	return categoriesApiResponse.categories;
+	return {
+		data: categoriesApiResponse.categories,
+		totalResults: categoriesApiResponse.categoriesConnection.aggregate.count,
+	};
 };
 
 export const getCategoryBySlug = async ({

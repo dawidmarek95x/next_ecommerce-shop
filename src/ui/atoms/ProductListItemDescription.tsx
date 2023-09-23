@@ -1,15 +1,12 @@
+import { ProductItemFragment } from "@/gql/graphql";
 import { formatMoney } from "@/utils/formatMoney";
 
 interface ProductListItemDescriptionProps {
-	product: {
-		name: string;
-		category: string;
-		price: number;
-	};
+	product: ProductItemFragment;
 }
 
 export const ProductListItemDescription = ({
-	product: { name, category, price },
+	product: { name, categories, price },
 }: ProductListItemDescriptionProps) => {
 	return (
 		<div className="mt-2">
@@ -20,7 +17,9 @@ export const ProductListItemDescription = ({
 				</p>
 			</div>
 			<div className="mt-1 flex flex-row justify-between">
-				<p className="text-sm text-slate-500">{category}</p>
+				{categories[0]?.name && (
+					<p className="text-sm text-slate-500">{categories[0]?.name}</p>
+				)}
 			</div>
 		</div>
 	);
