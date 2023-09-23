@@ -1,12 +1,8 @@
+import { CATEGORIES_INITIAL_SEARCH_PARAMS } from "@/lib/data/initialSearchParams";
 import { getCategories, getCategoryBySlug } from "@/lib/services/categories";
 import { getProductsByCategorySlug } from "@/lib/services/products";
 import { Pagination } from "@/ui/molecules/Pagination";
 import { ProductList } from "@/ui/organisms/ProductList";
-
-export const CATEGORIES_INITIAL_SEARCH_PARAMS = {
-	LIMIT: 20,
-	OFFSET: 0,
-};
 
 const PLACEHOLDER_DESCRIPTION =
 	"We are your favorite source of the latest trends and unique accessories that will allow you to express yourself and feel special. Our offer includes three fascinating categories: T-Shirts, Hoodies and Accessories. See why we are one of the best places to shop for fashion.";

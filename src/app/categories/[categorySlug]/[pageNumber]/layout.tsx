@@ -1,7 +1,7 @@
+import { CATEGORIES_INITIAL_SEARCH_PARAMS } from "@/lib/data/initialSearchParams";
 import { getCategoryBySlug } from "@/lib/services/categories";
 import { getProductsByCategorySlug } from "@/lib/services/products";
 import { redirect } from "next/navigation";
-import { CATEGORIES_INITIAL_SEARCH_PARAMS } from "./page";
 
 export default async function CategorySlugPageNumberLayout({
 	params,

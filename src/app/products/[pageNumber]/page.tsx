@@ -1,12 +1,11 @@
+import { PRODUCTS_INITIAL_SEARCH_PARAMS } from "@/lib/data/initialSearchParams";
 import { getProducts } from "@/lib/services/products";
 import { Pagination } from "@/ui/molecules/Pagination";
 import { ProductList } from "@/ui/organisms/ProductList";
 import { Metadata } from "next";
 
-export const PRODUCTS_INITIAL_SEARCH_PARAMS = {
-	LIMIT: 20,
-	OFFSET: 0,
-};
+const PRODUCTS_DESCRIPTION =
+	"Our products are a collection of the latest clothing trends and unique accessories that will allow you to express yourself and feel special. They are the epitome of comfort and style, offering a variety of styles, patterns and colors to express your personality. So explore our fascinating collection to find the perfect items that will express your unique style.";
 
 export const generateStaticParams = async ({
 	params,
@@ -35,12 +34,10 @@ export const generateStaticParams = async ({
 
 export const metadata: Metadata = {
 	title: "Products | E-commerse shop",
-	description:
-		"Welcome to our online store, where you will find the largest selection of high-quality products available online. Our offer covers a wide range of product categories, meeting the diverse needs and preferences of our customers. Whether you are a fan of technology, fashion, cosmetics or home goods, we have something special for you.",
+	description: PRODUCTS_DESCRIPTION,
 	openGraph: {
 		title: "Products | E-commerse shop",
-		description:
-			"Welcome to our online store, where you will find the largest selection of high-quality products available online. Our offer covers a wide range of product categories, meeting the diverse needs and preferences of our customers. Whether you are a fan of technology, fashion, cosmetics or home goods, we have something special for you.",
+		description: PRODUCTS_DESCRIPTION,
 	},
 };
 
@@ -60,11 +57,7 @@ export default async function CategoryProductPage({
 			<div>
 				<h1 className="py-8 text-center text-5xl font-bold">All products</h1>
 				<p className="mx-auto mb-14 max-w-3xl text-justify">
-					Welcome to our online store, where you will find the largest selection
-					of high-quality products available online. Our offer covers a wide
-					range of product categories, meeting the diverse needs and preferences
-					of our customers. Whether you are a fan of technology, fashion,
-					cosmetics or home goods, we have something special for you.
+					{PRODUCTS_DESCRIPTION}
 				</p>
 			</div>
 
