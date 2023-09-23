@@ -14,6 +14,4 @@ export const metadata: Metadata = {
 
 export default async function ProductsPage() {
 	redirect("/products/1");
-
-	return <></>;
 }

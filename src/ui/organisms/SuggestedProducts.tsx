@@ -1,4 +1,8 @@
-import { ProductData, getProducts } from "@/lib/services/products";
+import {
+	ProductData,
+	getProducts,
+	getProductsByCategorySlug,
+} from "@/lib/services/products";
 import { ProductList } from "./ProductList";
 
 export const SuggestedProductsList = async ({
@@ -6,25 +10,23 @@ export const SuggestedProductsList = async ({
 }: {
 	currentProduct: ProductData;
 }) => {
-	const products = await getProducts({ limit: "0" });
+	const categorizedProducts = await getProductsByCategorySlug({
+		categorySlug: currentProduct.category.slug,
+	});
 
-	const categorizedProducts = [
-		...products?.data?.filter(
-			(product) =>
-				product?.category === currentProduct?.category &&
-				product?.id !== currentProduct?.id,
-		),
-	];
+	let additionalProducts: ProductData[] = [];
+	if (categorizedProducts?.totalResults < 4) {
+		const products = await getProducts({});
+
+		additionalProducts =
+			products?.data?.filter((product) => product?.id !== currentProduct?.id) ??
+			[];
+	}
 
 	const suggestedProducts =
-		categorizedProducts?.length >= 4
-			? categorizedProducts?.slice(0, 4)
-			: [
-					...categorizedProducts,
-					...products?.data?.filter(
-						(product) => product?.id !== currentProduct?.id,
-					),
-			  ]?.slice(0, 4);
+		categorizedProducts.totalResults >= 4
+			? categorizedProducts?.data?.slice(0, 4)
+			: [...categorizedProducts?.data, ...additionalProducts]?.slice(0, 4);
 
 	return <ProductList products={suggestedProducts} />;
 };

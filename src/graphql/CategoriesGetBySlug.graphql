@@ -1,0 +1,8 @@
+query CategoriesGetBySlug($limit: Int, $offset: Int, $slug: String!) {
+	categories(first: $limit, skip: $offset, where: { slug: $slug }) {
+		id
+		name
+		slug
+		description
+	}
+}

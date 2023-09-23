@@ -1,0 +1,8 @@
+query CategoriesGetlist($limit: Int, $offset: Int) {
+	categories(first: $limit, skip: $offset) {
+		id
+		name
+		slug
+		description
+	}
+}
