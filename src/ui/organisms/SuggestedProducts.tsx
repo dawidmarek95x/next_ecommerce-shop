@@ -1,32 +1,35 @@
 import {
-	ProductData,
 	getProducts,
 	getProductsByCategorySlug,
 } from "@/lib/services/products";
 import { ProductList } from "./ProductList";
+import { ProductItemFragment } from "@/gql/graphql";
 
 export const SuggestedProductsList = async ({
 	currentProduct,
 }: {
-	currentProduct: ProductData;
+	currentProduct: ProductItemFragment;
 }) => {
-	const categorizedProducts = await getProductsByCategorySlug({
-		categorySlug: currentProduct.category.slug,
+	const products = await getProductsByCategorySlug({
+		categorySlug: currentProduct.categories[0]?.slug ?? "",
 	});
 
-	let additionalProducts: ProductData[] = [];
-	if (categorizedProducts?.totalResults < 4) {
+	const categorizedProducts = products.data.filter(
+		(product) => product.id !== currentProduct.id,
+	);
+	let additionalProducts: ProductItemFragment[] = [];
+	if (categorizedProducts.length < 4) {
 		const products = await getProducts({});
 
 		additionalProducts =
-			products?.data?.filter((product) => product?.id !== currentProduct?.id) ??
+			products?.data?.filter((product) => product.id !== currentProduct.id) ??
 			[];
 	}
 
 	const suggestedProducts =
-		categorizedProducts.totalResults >= 4
-			? categorizedProducts?.data?.slice(0, 4)
-			: [...categorizedProducts?.data, ...additionalProducts]?.slice(0, 4);
+		categorizedProducts.length >= 4
+			? categorizedProducts?.slice(0, 4)
+			: [...categorizedProducts, ...additionalProducts]?.slice(0, 4);
 
 	return <ProductList products={suggestedProducts} />;
 };

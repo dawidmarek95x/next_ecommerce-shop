@@ -1,17 +1,6 @@
 query ProductsGetList($limit: Int, $offset: Int) {
 	products(first: $limit, skip: $offset) {
-		id
-		name
-		slug
-		description
-		price
-		categories(first: 1) {
-			name
-			slug
-		}
-		images(first: 1) {
-			url
-		}
+		...ProductItem
 	}
 	productsConnection {
 		aggregate {

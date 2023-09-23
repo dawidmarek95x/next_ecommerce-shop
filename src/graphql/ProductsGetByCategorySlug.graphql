@@ -8,18 +8,7 @@ query ProductsGetByCategorySlug(
 		skip: $offset
 		where: { categories_some: { slug: $categorySlug } }
 	) {
-		id
-		name
-		slug
-		description
-		price
-		categories(first: 1) {
-			name
-			slug
-		}
-		images(first: 1) {
-			url
-		}
+		...ProductItem
 	}
 	productsConnection(where: { categories_some: { slug: $categorySlug } }) {
 		aggregate {

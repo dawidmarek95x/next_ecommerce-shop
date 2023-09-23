@@ -1,5 +1,6 @@
 import { TypedDocumentString } from "@/gql/graphql";
-import { apiUrl } from "./endpoints";
+
+export const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const executeGraphQL = async <TResult, TVariables>(
 	query: TypedDocumentString<TResult, TVariables>,
