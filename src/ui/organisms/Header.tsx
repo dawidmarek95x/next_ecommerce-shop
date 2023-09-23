@@ -1,4 +1,4 @@
-import { NavBar } from "./NavBar";
+import { NavBar } from "../molecules/NavBar";
 
 export const Header = () => {
 	return (

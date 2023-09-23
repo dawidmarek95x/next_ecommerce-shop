@@ -8,7 +8,7 @@ export const NavList = async () => {
 	const navLinks = [
 		{ href: "/", label: "Home", exact: true },
 		{ href: "/products", label: "All", exact: false },
-		...(categories?.map((category) => ({
+		...(categories?.data?.map((category) => ({
 			href: `/categories/${category.slug}`,
 			label: category.name,
 			exact: false,

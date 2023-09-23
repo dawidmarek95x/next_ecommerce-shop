@@ -22,7 +22,7 @@ export const generateMetadata = async ({
 			description: product?.description ?? "",
 			images: [
 				{
-					url: product?.coverImage?.src ?? "",
+					url: product?.images[0]?.url ?? "",
 				},
 			],
 		},
@@ -44,10 +44,10 @@ export default async function SingleProductPage({
 		<>
 			<article>
 				<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-					{product.coverImage && (
+					{product.images[0] && (
 						<ProductCoverImage
-							src={product.coverImage?.src}
-							alt={product.coverImage?.alt}
+							src={product.images[0]?.url}
+							alt={product.name}
 						/>
 					)}
 					<div className="px-6">
