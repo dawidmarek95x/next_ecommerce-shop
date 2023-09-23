@@ -20,8 +20,11 @@ export default function Home() {
 		<>
 			<div>
 				<h1 className="py-8 text-center text-5xl font-bold">Homepage</h1>
-				{HOMEPAGE_DESCRIPTIONS.map((text) => (
-					<p className="mx-auto mb-3 max-w-3xl text-justify last:mb-14">
+				{HOMEPAGE_DESCRIPTIONS.map((text, idx) => (
+					<p
+						key={idx}
+						className="mx-auto mb-3 max-w-3xl text-justify last:mb-14"
+					>
 						{text}
 					</p>
 				))}
