@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HTMLAttributeAnchorTarget } from "react";
 import clsx from "clsx";
+import { UrlObject } from "url";
 
 export const ActiveLink = <T extends string>({
 	activeClassName,
@@ -20,7 +21,7 @@ export const ActiveLink = <T extends string>({
 	children: React.ReactNode;
 	className?: string;
 	exact?: boolean;
-	href: Route<T>;
+	href: Route<T> | UrlObject;
 	inactiveClassName?: string;
 	prefetch?: boolean;
 	replace?: boolean;
@@ -28,9 +29,13 @@ export const ActiveLink = <T extends string>({
 }) => {
 	const pathname = usePathname();
 
-	const isActive = exact
-		? pathname === href
-		: pathname?.startsWith(href as string);
+	const matchedPath = (typeof href === "string" ? href : href.pathname) ?? null;
+
+	const isActive =
+		(matchedPath &&
+			pathname &&
+			(exact ? pathname === matchedPath : pathname.startsWith(matchedPath))) ||
+		false;
 
 	return (
 		<Link

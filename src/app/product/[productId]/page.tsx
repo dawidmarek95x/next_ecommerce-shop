@@ -4,6 +4,7 @@ import { ProductCoverImage } from "@/ui/atoms/ProductCoverImage";
 import { SuggestedProductsList } from "@/ui/organisms/SuggestedProducts";
 import { formatMoney } from "@/utils/formatMoney";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 export const generateMetadata = async ({
@@ -14,14 +15,14 @@ export const generateMetadata = async ({
 	const product = await getProductById(params.productId);
 
 	return {
-		title: `${product.name} | E-commerse shop`,
-		description: product.description,
+		title: `${product?.name ?? "Product"} | E-commerse shop`,
+		description: product?.description ?? "",
 		openGraph: {
-			title: `${product.name} | E-commerse shop`,
-			description: product.description,
+			title: `${product?.name ?? ""} | E-commerse shop`,
+			description: product?.description ?? "",
 			images: [
 				{
-					url: product.coverImage.src,
+					url: product?.coverImage?.src ?? "",
 				},
 			],
 		},
@@ -33,16 +34,22 @@ export default async function SingleProductPage({
 }: {
 	params: { productId: string };
 }) {
-	const product = await getProductById(params.productId);
+	const product = await getProductById(params?.productId);
+
+	if (!product) {
+		notFound();
+	}
 
 	return (
 		<>
 			<article>
 				<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-					<ProductCoverImage
-						src={product.coverImage.src}
-						alt={product.coverImage.alt}
-					/>
+					{product.coverImage && (
+						<ProductCoverImage
+							src={product.coverImage?.src}
+							alt={product.coverImage?.alt}
+						/>
+					)}
 					<div className="px-6">
 						<h1 className="flex-auto text-3xl font-bold tracking-tight text-slate-900">
 							{product.name}
