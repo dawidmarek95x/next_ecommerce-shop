@@ -3,19 +3,25 @@ import { Pagination } from "@/ui/molecules/Pagination";
 import { ProductList } from "@/ui/organisms/ProductList";
 import { Metadata } from "next";
 
+export const PRODUCTS_INITIAL_SEARCH_PARAMS = {
+	LIMIT: 20,
+	OFFSET: 0,
+};
+
 export const generateStaticParams = async ({
 	params,
 }: {
 	params: { pageNumber: string };
 }) => {
 	const products = await getProducts({
-		limit: INITIAL_SEARCH_PARAMS.LIMIT,
-		offset: params.pageNumber,
+		limit: PRODUCTS_INITIAL_SEARCH_PARAMS.LIMIT,
+		offset:
+			(Number(params.pageNumber) - 1) * PRODUCTS_INITIAL_SEARCH_PARAMS.LIMIT,
 	});
 
-	const pageCount =
-		products.totalResults / Number(INITIAL_SEARCH_PARAMS.LIMIT) +
-		(products.totalResults % Number(INITIAL_SEARCH_PARAMS.LIMIT) !== 0 ? 1 : 0);
+	const pageCount = Math.ceil(
+		products.totalResults / Number(PRODUCTS_INITIAL_SEARCH_PARAMS.LIMIT),
+	);
 
 	const pageNumbers = [];
 	for (let i = 1; i <= pageCount; i++) {
@@ -38,18 +44,15 @@ export const metadata: Metadata = {
 	},
 };
 
-const INITIAL_SEARCH_PARAMS = {
-	LIMIT: "20",
-};
-
 export default async function CategoryProductPage({
 	params,
 }: {
 	params: { pageNumber: string };
 }) {
 	const products = await getProducts({
-		limit: INITIAL_SEARCH_PARAMS.LIMIT,
-		offset: params.pageNumber,
+		limit: PRODUCTS_INITIAL_SEARCH_PARAMS.LIMIT,
+		offset:
+			(Number(params.pageNumber) - 1) * PRODUCTS_INITIAL_SEARCH_PARAMS.LIMIT,
 	});
 
 	return (
@@ -73,7 +76,7 @@ export default async function CategoryProductPage({
 				totalResults={products?.totalResults}
 				currentPage={+params?.pageNumber}
 				adjacentPageCount={2}
-				resultsPerPage={+INITIAL_SEARCH_PARAMS.LIMIT}
+				resultsPerPage={PRODUCTS_INITIAL_SEARCH_PARAMS.LIMIT}
 				basePath="/products"
 			/>
 		</>

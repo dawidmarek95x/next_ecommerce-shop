@@ -1,0 +1,29 @@
+query ProductsGetByCategorySlug(
+	$limit: Int
+	$offset: Int
+	$categorySlug: String!
+) {
+	products(
+		first: $limit
+		skip: $offset
+		where: { categories_some: { slug: $categorySlug } }
+	) {
+		id
+		name
+		slug
+		description
+		price
+		categories(first: 1) {
+			name
+			slug
+		}
+		images(first: 1) {
+			url
+		}
+	}
+	productsConnection(where: { categories_some: { slug: $categorySlug } }) {
+		aggregate {
+			count
+		}
+	}
+}

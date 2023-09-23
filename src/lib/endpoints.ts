@@ -1,3 +1,4 @@
-const apiUrl = "https://naszsklep-api.vercel.app/api";
+// const apiUrl2 = "https://naszsklep-api.vercel.app/api";
+export const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-export const products = `${apiUrl}/products`;
+// export const products = `${apiUrl2}/products`;
