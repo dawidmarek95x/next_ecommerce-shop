@@ -25,11 +25,9 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={poppins.className}>
 				<Header />
-				<main className="sm:py-18 mx-auto flex w-full max-w-2xl flex-grow flex-col px-8 py-12 sm:px-6 lg:max-w-7xl">
-					{children}
-				</main>
+				<main className="mb-6">{children}</main>
 				<footer>
-					<p className="text-center text-sm text-gray-500">© 2023</p>
+					<p className="py-5 text-center text-sm text-gray-500">© 2023</p>
 				</footer>
 			</body>
 		</html>

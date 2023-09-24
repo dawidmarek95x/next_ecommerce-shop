@@ -27,5 +27,7 @@ export default async function ProductsPageNumberLayout({
 		redirect(`/products/${pageCount}`);
 	}
 
-	return <>{children}</>;
+	return (
+		<div className="mx-auto flex w-full flex-grow flex-col">{children}</div>
+	);
 }
