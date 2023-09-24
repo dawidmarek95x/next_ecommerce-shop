@@ -2,6 +2,7 @@ import {
 	ProductGetByIdDocument,
 	ProductsGetByCategorySlugDocument,
 	ProductsGetByCollectionSlugDocument,
+	ProductsGetBySearchedNameDocument,
 	ProductsGetListDocument,
 } from "@/gql/graphql";
 import { executeGraphQL } from "../graphqlApi";
@@ -19,6 +20,11 @@ interface GetProductsByCategorySlugSearchParams
 interface GetProductsByCollectionSlugSearchParams
 	extends GetProductsSearchParams {
 	collectionSlug: string;
+}
+
+interface GetProductsBySearchedNameSearchParams
+	extends GetProductsSearchParams {
+	searchedName: string;
 }
 
 export const getProducts = async ({
@@ -60,6 +66,22 @@ export const getProductsByCollectionSlug = async ({
 	const productsApiResponse = await executeGraphQL(
 		ProductsGetByCollectionSlugDocument,
 		{ limit, offset, collectionSlug },
+	);
+
+	return {
+		data: productsApiResponse.products,
+		totalResults: productsApiResponse.productsConnection.aggregate.count,
+	};
+};
+
+export const getProductsBySearchedName = async ({
+	limit = 20,
+	offset = 0,
+	searchedName,
+}: GetProductsBySearchedNameSearchParams) => {
+	const productsApiResponse = await executeGraphQL(
+		ProductsGetBySearchedNameDocument,
+		{ limit, offset, searchedName },
 	);
 
 	return {

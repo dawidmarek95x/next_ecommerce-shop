@@ -51,7 +51,10 @@ export default async function SingleProductPage({
 						/>
 					)}
 					<div className="px-6">
-						<h1 className="flex-auto text-3xl font-bold tracking-tight text-slate-900">
+						<h1
+							className="flex-auto text-3xl font-bold tracking-tight text-slate-900"
+							role="heading"
+						>
 							{product.name}
 						</h1>
 						<div className="mt-4 flex items-center">

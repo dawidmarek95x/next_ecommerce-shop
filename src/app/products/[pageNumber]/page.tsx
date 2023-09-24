@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 	},
 };
 
-export default async function CategoryProductPage({
+export default async function ProductsPageNumberPage({
 	params,
 }: {
 	params: { pageNumber: string };

@@ -10774,6 +10774,15 @@ export type ProductsGetByCollectionSlugQueryVariables = Exact<{
 
 export type ProductsGetByCollectionSlugQuery = { products: Array<{ id: string, name: string, slug: string, description: string, price: number, collections: Array<{ name: string, slug: string }>, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> }>, productsConnection: { aggregate: { count: number } } };
 
+export type ProductsGetBySearchedNameQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  searchedName?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type ProductsGetBySearchedNameQuery = { products: Array<{ id: string, name: string, slug: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> }>, productsConnection: { aggregate: { count: number } } };
+
 export type ProductsGetListQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -10983,6 +10992,31 @@ export const ProductsGetByCollectionSlugDocument = new TypedDocumentString(`
     url
   }
 }`) as unknown as TypedDocumentString<ProductsGetByCollectionSlugQuery, ProductsGetByCollectionSlugQueryVariables>;
+export const ProductsGetBySearchedNameDocument = new TypedDocumentString(`
+    query ProductsGetBySearchedName($limit: Int, $offset: Int, $searchedName: String) {
+  products(first: $limit, skip: $offset, where: {name_contains: $searchedName}) {
+    ...ProductItem
+  }
+  productsConnection(where: {name_contains: $searchedName}) {
+    aggregate {
+      count
+    }
+  }
+}
+    fragment ProductItem on Product {
+  id
+  name
+  slug
+  description
+  price
+  categories(first: 1) {
+    name
+    slug
+  }
+  images(first: 1) {
+    url
+  }
+}`) as unknown as TypedDocumentString<ProductsGetBySearchedNameQuery, ProductsGetBySearchedNameQueryVariables>;
 export const ProductsGetListDocument = new TypedDocumentString(`
     query ProductsGetList($limit: Int, $offset: Int) {
   products(first: $limit, skip: $offset) {

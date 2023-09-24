@@ -1,0 +1,18 @@
+query ProductsGetBySearchedName(
+	$limit: Int
+	$offset: Int
+	$searchedName: String
+) {
+	products(
+		first: $limit
+		skip: $offset
+		where: { name_contains: $searchedName }
+	) {
+		...ProductItem
+	}
+	productsConnection(where: { name_contains: $searchedName }) {
+		aggregate {
+			count
+		}
+	}
+}
