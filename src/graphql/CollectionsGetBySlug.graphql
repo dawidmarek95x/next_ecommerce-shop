@@ -1,0 +1,5 @@
+query CollectionsGetBySlug($limit: Int, $offset: Int, $slug: String!) {
+	collections(first: $limit, skip: $offset, where: { slug: $slug }) {
+		...CollectionItem
+	}
+}
