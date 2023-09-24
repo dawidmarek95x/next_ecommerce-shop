@@ -6,7 +6,7 @@ import { Header } from "@/ui/organisms/Header";
 const poppins = Poppins({
 	weight: ["400", "500", "600", "700"],
 	style: ["normal", "italic"],
-	subsets: ["latin"],
+	subsets: ["latin", "latin-ext"],
 	display: "swap",
 });
 
