@@ -1,4 +1,6 @@
+import { getProducts } from "@/lib/services/products";
 import { CollectionArticle } from "@/ui/organisms/CollectionArticle";
+import { ProductList } from "@/ui/organisms/ProductList";
 import { Metadata } from "next";
 
 const HOMEPAGE_DESCRIPTIONS = [
@@ -15,7 +17,9 @@ export const metadata: Metadata = {
 	},
 };
 
-export default function Home() {
+export default async function Home() {
+	const products = await getProducts({ limit: 4 });
+
 	return (
 		<>
 			<div>
@@ -35,6 +39,9 @@ export default function Home() {
 						<CollectionArticle />
 					</div>
 				</div>
+				<article className="sm:py-18 mx-auto max-w-2xl px-8 py-12 sm:px-6 lg:max-w-7xl">
+					<ProductList products={products?.data} />
+				</article>
 			</div>
 		</>
 	);
