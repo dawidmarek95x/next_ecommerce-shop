@@ -89,12 +89,12 @@ export default async function CategoryProductPage({
 				<h1 className="py-8 text-center text-5xl font-bold">
 					{category?.name ?? "Categories"}
 				</h1>
-				<p className="mx-auto mb-14 max-w-3xl text-justify">
+				<p className="mx-auto mb-11 max-w-3xl px-8 text-justify lg:max-w-4xl xl:max-w-5xl">
 					{category?.description ?? PLACEHOLDER_DESCRIPTION}
 				</p>
 			</div>
 
-			<article>
+			<article className="sm:py-18 mx-auto max-w-2xl px-8 py-12 sm:px-6 lg:max-w-7xl">
 				<ProductList products={products?.data} />
 			</article>
 

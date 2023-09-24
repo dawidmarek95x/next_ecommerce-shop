@@ -41,7 +41,7 @@ export default async function SingleProductPage({
 	}
 
 	return (
-		<>
+		<div className="sm:py-18 mx-auto flex w-full max-w-2xl flex-grow flex-col px-8 py-12 sm:px-6 lg:max-w-7xl">
 			<article>
 				<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 					{product.images[0] && (
@@ -67,7 +67,7 @@ export default async function SingleProductPage({
 					</div>
 				</div>
 			</article>
-			<aside className="bg-white">
+			<aside className="bg-white" data-testid="related-products">
 				<div className="py-16">
 					<h2 className="py-8 text-xl font-semibold leading-7">
 						Similar Products
@@ -78,6 +78,6 @@ export default async function SingleProductPage({
 					</Suspense>
 				</div>
 			</aside>
-		</>
+		</div>
 	);
 }

@@ -35,5 +35,7 @@ export default async function CategorySlugPageNumberLayout({
 		redirect(`/categories/${params.categorySlug}/${pageCount}`);
 	}
 
-	return <>{children}</>;
+	return (
+		<div className="mx-auto flex w-full flex-grow flex-col">{children}</div>
+	);
 }

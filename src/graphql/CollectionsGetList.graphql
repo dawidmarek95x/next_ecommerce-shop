@@ -1,0 +1,10 @@
+query CollectionsGetList($limit: Int, $offset: Int) {
+	collections(first: $limit, skip: $offset) {
+		...CollectionItem
+	}
+	collectionsConnection {
+		aggregate {
+			count
+		}
+	}
+}

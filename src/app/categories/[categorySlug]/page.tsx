@@ -9,7 +9,7 @@ export const generateStaticParams = async () => {
 	}));
 };
 
-export default async function ProductsPage({
+export default async function CategorySlugPage({
 	params,
 }: {
 	params: { categorySlug: string };
