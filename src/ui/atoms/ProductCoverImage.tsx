@@ -1,19 +1,24 @@
 import NextImage from "next/image";
+import { HTMLAttributes } from "react";
 
-interface ProductCoverImageProps {
+interface ProductCoverImageProps extends HTMLAttributes<HTMLDivElement> {
 	src: string;
 	alt: string;
 }
 
-export const ProductCoverImage = ({ src, alt }: ProductCoverImageProps) => {
+export const ProductCoverImage = ({
+	src,
+	alt,
+	...props
+}: ProductCoverImageProps) => {
 	return (
-		<div className="hover:bg-slate-2=300 rounded-md border bg-slate-100">
+		<div {...props}>
 			<NextImage
 				src={src}
 				alt={alt}
 				width={320}
 				height={320}
-				className="w-full object-contain object-center p-4 transition-transform hover:scale-105"
+				className="h-full w-full object-cover object-center p-4 transition-transform hover:scale-105"
 			/>
 		</div>
 	);
