@@ -1,6 +1,7 @@
 import { getProductById } from "@/lib/services/products";
 import { Loader } from "@/ui/atoms/Loader";
 import { ProductCoverImage } from "@/ui/atoms/ProductCoverImage";
+import { ProductColorSelectionList } from "@/ui/organisms/ProductColorSelectionList";
 import { SuggestedProductsList } from "@/ui/organisms/SuggestedProducts";
 import { formatMoney } from "@/utils/formatMoney";
 import { Metadata } from "next";
@@ -40,6 +41,10 @@ export default async function SingleProductPage({
 		notFound();
 	}
 
+	const colorVariants = product?.colorVariants.map(
+		(colorVariant) => colorVariant.color,
+	);
+
 	return (
 		<div className="sm:py-18 mx-auto flex w-full max-w-2xl flex-grow flex-col px-8 py-12 sm:px-6 lg:max-w-7xl">
 			<article>
@@ -62,12 +67,18 @@ export default async function SingleProductPage({
 								{formatMoney(product.price / 100)}
 							</p>
 						</div>
-						<div className="mt-4 space-y-6">
-							<p className="text-justify font-sans text-base text-slate-500">
-								{product.description}
-							</p>
+						<div className="mt-4">
+							<ProductColorSelectionList
+								className="flex"
+								colorVariants={colorVariants}
+							/>
 						</div>
 					</div>
+				</div>
+				<div className="mt-4 space-y-6">
+					<p className="text-justify font-sans text-base text-slate-500">
+						{product.description}
+					</p>
 				</div>
 			</article>
 			<aside className="bg-white" data-testid="related-products">
