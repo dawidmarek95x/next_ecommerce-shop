@@ -1,12 +1,13 @@
+import { type Metadata } from "next";
 import { getProductById } from "@/lib/services/products";
+import { notFound } from "next/navigation";
 import { Loader } from "@/ui/atoms/Loader";
 import { ProductCoverImage } from "@/ui/atoms/ProductCoverImage";
+import { formatMoney } from "@/utils/formatMoney";
 import { ProductColorSelectionList } from "@/ui/organisms/ProductColorSelectionList";
 import { SuggestedProductsList } from "@/ui/organisms/SuggestedProducts";
-import { formatMoney } from "@/utils/formatMoney";
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { CheckCheckIcon } from "lucide-react";
 
 export const generateMetadata = async ({
 	params,
@@ -41,14 +42,15 @@ export default async function SingleProductPage({
 		notFound();
 	}
 
-	const colorVariants = product?.colorVariants.map(
-		(colorVariant) => colorVariant.color,
-	);
+	async function addToCartAction(formData: FormData) {
+		"use server";
+		console.log(formData);
+	}
 
 	return (
 		<div className="sm:py-18 mx-auto flex w-full max-w-2xl flex-grow flex-col px-8 py-12 sm:px-6 lg:max-w-7xl">
 			<article>
-				<div className="grid grid-cols-1 gap-4">
+				<form action={addToCartAction} className="grid grid-cols-1 gap-4">
 					{product.images[0] && (
 						<ProductCoverImage
 							src={product.images[0]?.url}
@@ -76,11 +78,29 @@ export default async function SingleProductPage({
 						<div className="mt-4">
 							<ProductColorSelectionList
 								className="flex"
-								colorVariants={colorVariants}
+								colorVariants={product?.colorVariants}
 							/>
 						</div>
+						<div className="mt-6 flex items-center">
+							<CheckCheckIcon
+								className="h-5 w-5 flex-shrink-0 text-blue-500"
+								aria-hidden="true"
+							/>
+							<p className="ml-1 text-sm font-semibold text-slate-500">
+								In stock
+							</p>
+						</div>
+						<div className="mt-8">
+							<button
+								type="submit"
+								data-testId="add-to-cart-button"
+								className="inline-flex h-14 w-full items-center justify-center rounded-md from-[#1e4b65] from-20% via-[#010315] to-[#0b237d] to-80% px-6 text-base font-medium leading-6 text-white shadow transition duration-150 ease-in-out enabled:bg-gradient-to-r hover:enabled:brightness-125 disabled:cursor-wait disabled:bg-gray-300"
+							>
+								Add to cart
+							</button>
+						</div>
 					</div>
-				</div>
+				</form>
 			</article>
 			<aside className="bg-white" data-testid="related-products">
 				<div className="pt-8">

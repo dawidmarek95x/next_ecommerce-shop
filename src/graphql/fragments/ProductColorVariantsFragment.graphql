@@ -1,0 +1,6 @@
+fragment ProductColorVariants on Product {
+	colorVariants {
+		slug
+		color
+	}
+}
