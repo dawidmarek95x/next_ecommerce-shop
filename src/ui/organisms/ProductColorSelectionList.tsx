@@ -1,10 +1,10 @@
 import { HTMLAttributes } from "react";
 import { ProductColorSelectionItem } from "../molecules/ProductColorSelectionItem";
+import { ProductColorVariantsFragment } from "@/gql/graphql";
 
 interface ProductColorSelectionListProps
-	extends HTMLAttributes<HTMLUListElement> {
-	colorVariants: string[];
-}
+	extends HTMLAttributes<HTMLUListElement>,
+		ProductColorVariantsFragment {}
 
 export const ProductColorSelectionList = ({
 	colorVariants,

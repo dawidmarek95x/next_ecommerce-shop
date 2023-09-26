@@ -5727,14 +5727,24 @@ export type ProductUpdatedByArgs = {
 export type ProductColor =
   | 'beige'
   | 'black'
+  | 'blue'
+  | 'brown'
+  | 'claret'
   | 'gray'
   | 'khaki'
   | 'multicolor'
+  | 'mustard'
+  | 'navy_blue'
+  | 'orange'
+  | 'peach'
   | 'pink'
-  | 'purple';
+  | 'purple'
+  | 'red'
+  | 'white'
+  | 'yellow';
 
 export type ProductColorVariant = Node & {
-  color: ProductColor;
+  color: Scalars['String']['output'];
   /** The time the document was created */
   createdAt: Scalars['DateTime']['output'];
   /** User that created this document */
@@ -5756,6 +5766,7 @@ export type ProductColorVariant = Node & {
   /** User that last published this document */
   publishedBy?: Maybe<User>;
   scheduledIn: Array<ScheduledOperation>;
+  slug: Scalars['String']['output'];
   /** System stage field */
   stage: Stage;
   /** The time the document was updated */
@@ -5859,13 +5870,14 @@ export type ProductColorVariantConnection = {
 };
 
 export type ProductColorVariantCreateInput = {
-  color: ProductColor;
+  color: Scalars['String']['input'];
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<ProductColorVariantCreateLocalizationsInput>;
   /** name input for default locale (en) */
   name: Scalars['String']['input'];
   products?: InputMaybe<ProductCreateManyInlineInput>;
+  slug: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
@@ -5918,13 +5930,25 @@ export type ProductColorVariantManyWhereInput = {
   OR?: InputMaybe<Array<ProductColorVariantWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']['input']>;
-  color?: InputMaybe<ProductColor>;
+  color?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  color_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  color_ends_with?: InputMaybe<Scalars['String']['input']>;
   /** All values that are contained in given list. */
-  color_in?: InputMaybe<Array<InputMaybe<ProductColor>>>;
+  color_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Any other value that exists and is not equal to the given value. */
-  color_not?: InputMaybe<ProductColor>;
+  color_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  color_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  color_not_ends_with?: InputMaybe<Scalars['String']['input']>;
   /** All values that are not contained in given list. */
-  color_not_in?: InputMaybe<Array<InputMaybe<ProductColor>>>;
+  color_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  color_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  color_starts_with?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -5985,6 +6009,25 @@ export type ProductColorVariantManyWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  slug_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  slug_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -6014,16 +6057,19 @@ export type ProductColorVariantOrderByInput =
   | 'name_DESC'
   | 'publishedAt_ASC'
   | 'publishedAt_DESC'
+  | 'slug_ASC'
+  | 'slug_DESC'
   | 'updatedAt_ASC'
   | 'updatedAt_DESC';
 
 export type ProductColorVariantUpdateInput = {
-  color?: InputMaybe<ProductColor>;
+  color?: InputMaybe<Scalars['String']['input']>;
   /** Manage document localizations */
   localizations?: InputMaybe<ProductColorVariantUpdateLocalizationsInput>;
   /** name input for default locale (en) */
   name?: InputMaybe<Scalars['String']['input']>;
   products?: InputMaybe<ProductUpdateManyInlineInput>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductColorVariantUpdateLocalizationDataInput = {
@@ -6063,7 +6109,6 @@ export type ProductColorVariantUpdateManyInlineInput = {
 };
 
 export type ProductColorVariantUpdateManyInput = {
-  color?: InputMaybe<ProductColor>;
   /** Optional updates to localizations */
   localizations?: InputMaybe<ProductColorVariantUpdateManyLocalizationsInput>;
   /** name input for default locale (en) */
@@ -6149,13 +6194,25 @@ export type ProductColorVariantWhereInput = {
   OR?: InputMaybe<Array<ProductColorVariantWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']['input']>;
-  color?: InputMaybe<ProductColor>;
+  color?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  color_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  color_ends_with?: InputMaybe<Scalars['String']['input']>;
   /** All values that are contained in given list. */
-  color_in?: InputMaybe<Array<InputMaybe<ProductColor>>>;
+  color_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Any other value that exists and is not equal to the given value. */
-  color_not?: InputMaybe<ProductColor>;
+  color_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  color_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  color_not_ends_with?: InputMaybe<Scalars['String']['input']>;
   /** All values that are not contained in given list. */
-  color_not_in?: InputMaybe<Array<InputMaybe<ProductColor>>>;
+  color_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  color_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  color_starts_with?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -6235,6 +6292,25 @@ export type ProductColorVariantWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  slug_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  slug_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -6269,7 +6345,9 @@ export type ProductColorVariantWhereStageInput = {
 
 /** References ProductColorVariant record uniquely */
 export type ProductColorVariantWhereUniqueInput = {
+  color?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductConnectInput = {
@@ -6481,6 +6559,16 @@ export type ProductOrderByInput =
   | 'updatedAt_DESC';
 
 export type ProductSize =
+  | 'EU35'
+  | 'EU36'
+  | 'EU37'
+  | 'EU38'
+  | 'EU39'
+  | 'EU40'
+  | 'EU41'
+  | 'EU42'
+  | 'EU43'
+  | 'EU44'
   | 'L'
   | 'M'
   | 'S'
@@ -10740,7 +10828,7 @@ export type ProductGetByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductGetByIdQuery = { product?: { id: string, name: string, slug: string, description: string, price: number, colorVariants: Array<{ color: ProductColor }>, sizeVariants: Array<{ size: ProductSize }>, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> } | null };
+export type ProductGetByIdQuery = { product?: { id: string, name: string, slug: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }>, colorVariants: Array<{ slug: string, color: string }>, sizeVariants: Array<{ size: ProductSize }> } | null };
 
 export type ProductsGetByCategorySlugQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -10781,7 +10869,11 @@ export type CategoryItemFragment = { id: string, name: string, slug: string, des
 
 export type CollectionItemFragment = { id: string, name: string, slug: string, description?: string | null, image: { url: string } };
 
+export type ProductColorVariantsFragment = { colorVariants: Array<{ slug: string, color: string }> };
+
 export type ProductItemFragment = { id: string, name: string, slug: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> };
+
+export type ProductSizeVariantsFragment = { sizeVariants: Array<{ size: ProductSize }> };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -10816,6 +10908,14 @@ export const CollectionItemFragmentDoc = new TypedDocumentString(`
   }
 }
     `, {"fragmentName":"CollectionItem"}) as unknown as TypedDocumentString<CollectionItemFragment, unknown>;
+export const ProductColorVariantsFragmentDoc = new TypedDocumentString(`
+    fragment ProductColorVariants on Product {
+  colorVariants {
+    slug
+    color
+  }
+}
+    `, {"fragmentName":"ProductColorVariants"}) as unknown as TypedDocumentString<ProductColorVariantsFragment, unknown>;
 export const ProductItemFragmentDoc = new TypedDocumentString(`
     fragment ProductItem on Product {
   id
@@ -10832,6 +10932,13 @@ export const ProductItemFragmentDoc = new TypedDocumentString(`
   }
 }
     `, {"fragmentName":"ProductItem"}) as unknown as TypedDocumentString<ProductItemFragment, unknown>;
+export const ProductSizeVariantsFragmentDoc = new TypedDocumentString(`
+    fragment ProductSizeVariants on Product {
+  sizeVariants {
+    size
+  }
+}
+    `, {"fragmentName":"ProductSizeVariants"}) as unknown as TypedDocumentString<ProductSizeVariantsFragment, unknown>;
 export const CategoriesGetBySlugDocument = new TypedDocumentString(`
     query CategoriesGetBySlug($limit: Int, $offset: Int, $slug: String!) {
   categories(first: $limit, skip: $offset, where: {slug: $slug}) {
@@ -10900,15 +11007,17 @@ export const ProductGetByIdDocument = new TypedDocumentString(`
     query ProductGetById($id: ID!) {
   product(where: {id: $id}) {
     ...ProductItem
-    colorVariants {
-      color
-    }
-    sizeVariants {
-      size
-    }
+    ...ProductColorVariants
+    ...ProductSizeVariants
   }
 }
-    fragment ProductItem on Product {
+    fragment ProductColorVariants on Product {
+  colorVariants {
+    slug
+    color
+  }
+}
+fragment ProductItem on Product {
   id
   name
   slug
@@ -10920,6 +11029,11 @@ export const ProductGetByIdDocument = new TypedDocumentString(`
   }
   images(first: 1) {
     url
+  }
+}
+fragment ProductSizeVariants on Product {
+  sizeVariants {
+    size
   }
 }`) as unknown as TypedDocumentString<ProductGetByIdQuery, ProductGetByIdQueryVariables>;
 export const ProductsGetByCategorySlugDocument = new TypedDocumentString(`

@@ -1,0 +1,5 @@
+fragment ProductSizeVariants on Product {
+	sizeVariants {
+		size
+	}
+}

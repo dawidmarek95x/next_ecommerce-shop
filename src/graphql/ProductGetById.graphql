@@ -1,11 +1,7 @@
 query ProductGetById($id: ID!) {
 	product(where: { id: $id }) {
 		...ProductItem
-		colorVariants {
-			color
-		}
-		sizeVariants {
-			size
-		}
+		...ProductColorVariants
+		...ProductSizeVariants
 	}
 }
