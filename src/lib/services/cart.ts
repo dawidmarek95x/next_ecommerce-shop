@@ -10,20 +10,16 @@ import {
 import { cookies } from "next/headers";
 import { executeGraphQL } from "../graphqlApi";
 
-export async function getOrCreateCart(): Promise<CartFragment | null> {
-	const existingCart = await getCartByFromCookies();
+export async function getOrCreateCart(): Promise<CartFragment | undefined> {
+	let cart: CartFragment | undefined = undefined;
+	cart = await getCartByFromCookies();
 
-	if (existingCart) {
-		return existingCart;
+	if (!cart) {
+		const newCart = await createCart();
+		cart = newCart;
 	}
 
-	const { createOrder: newCart } = await createCart();
-
-	if (newCart) {
-		return newCart;
-	}
-
-	return null;
+	return cart;
 }
 
 export async function getCartByFromCookies() {
@@ -49,7 +45,20 @@ export async function getCartByFromCookies() {
 }
 
 export async function createCart() {
-	return await executeGraphQL(CartCreateDocument, {}, { isMutation: true });
+	const { createOrder: cart } = await executeGraphQL(
+		CartCreateDocument,
+		{},
+		{ isMutation: true },
+	);
+
+	if (cart) {
+		cookies().set("cartId", cart.id, {
+			httpOnly: true,
+			sameSite: "lax",
+		});
+
+		return cart;
+	}
 }
 
 export async function addProductToCart(cart: CartFragment, productId: string) {
