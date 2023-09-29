@@ -26,8 +26,8 @@ export const getCategories = async ({
 	);
 
 	return {
-		data: categoriesApiResponse.categories,
-		totalResults: categoriesApiResponse.categoriesConnection.aggregate.count,
+		data: categoriesApiResponse?.categories,
+		totalResults: categoriesApiResponse?.categoriesConnection.aggregate.count,
 	};
 };
 

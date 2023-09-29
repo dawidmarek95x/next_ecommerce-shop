@@ -1,0 +1,22 @@
+fragment Cart on Order {
+	id
+	email
+	total
+	stripeCheckoutId
+	orderItems {
+		id
+		quantity
+		total
+		product {
+			id
+			name
+			price
+			categories {
+				name
+			}
+			images {
+				url
+			}
+		}
+	}
+}

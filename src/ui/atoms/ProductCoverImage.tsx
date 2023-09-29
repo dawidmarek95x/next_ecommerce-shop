@@ -18,7 +18,7 @@ export const ProductCoverImage = ({
 				alt={alt}
 				width={320}
 				height={320}
-				className="h-full w-full object-cover object-center p-4 transition-transform hover:scale-105"
+				className="aspect-square h-full w-full object-cover object-center p-4 transition-transform hover:scale-105"
 			/>
 		</div>
 	);

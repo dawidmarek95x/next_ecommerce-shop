@@ -37,8 +37,8 @@ export const getProducts = async ({
 	});
 
 	return {
-		data: productsApiResponse.products,
-		totalResults: productsApiResponse.productsConnection.aggregate.count,
+		data: productsApiResponse?.products,
+		totalResults: productsApiResponse?.productsConnection.aggregate.count,
 	};
 };
 
@@ -53,8 +53,8 @@ export const getProductsByCategorySlug = async ({
 	);
 
 	return {
-		data: productsApiResponse.products,
-		totalResults: productsApiResponse.productsConnection.aggregate.count,
+		data: productsApiResponse?.products,
+		totalResults: productsApiResponse?.productsConnection.aggregate.count,
 	};
 };
 
@@ -69,8 +69,8 @@ export const getProductsByCollectionSlug = async ({
 	);
 
 	return {
-		data: productsApiResponse.products,
-		totalResults: productsApiResponse.productsConnection.aggregate.count,
+		data: productsApiResponse?.products,
+		totalResults: productsApiResponse?.productsConnection.aggregate.count,
 	};
 };
 
@@ -85,8 +85,8 @@ export const getProductsBySearchedName = async ({
 	);
 
 	return {
-		data: productsApiResponse.products,
-		totalResults: productsApiResponse.productsConnection.aggregate.count,
+		data: productsApiResponse?.products,
+		totalResults: productsApiResponse?.productsConnection.aggregate.count,
 	};
 };
 
@@ -95,9 +95,9 @@ export const getProductById = async (id: string) => {
 		id,
 	});
 
-	if (!productApiResponse.product) {
+	if (!productApiResponse?.product) {
 		return null;
 	}
 
-	return productApiResponse.product;
+	return productApiResponse?.product;
 };

@@ -8,6 +8,14 @@ import { ProductColorSelectionList } from "@/ui/organisms/ProductColorSelectionL
 import { SuggestedProductsList } from "@/ui/organisms/SuggestedProducts";
 import { Suspense } from "react";
 import { CheckCheckIcon } from "lucide-react";
+import { cookies } from "next/headers";
+import { AddToCartButton } from "@/ui/atoms/AddToCartButton";
+import {
+	addProductToCart,
+	createCart,
+	getCartByFromCookies,
+} from "@/lib/services/cart";
+import { CartFragment } from "@/gql/graphql";
 
 export const generateMetadata = async ({
 	params,
@@ -42,9 +50,28 @@ export default async function SingleProductPage({
 		notFound();
 	}
 
-	async function addToCartAction(formData: FormData) {
+	async function addToCartAction(_formData: FormData) {
 		"use server";
-		console.log(formData);
+		let cart: CartFragment | null | undefined = undefined;
+		cart = await getCartByFromCookies();
+
+		if (!cart) {
+			const { createOrder: newCart } = await createCart();
+			const setNewCartDelay = setTimeout(() => {
+				cart = newCart;
+			}, 500);
+
+			clearTimeout(setNewCartDelay);
+		}
+
+		if (cart) {
+			cookies().set("cartId", cart.id, {
+				httpOnly: true,
+				sameSite: "lax",
+			});
+
+			await addProductToCart(cart, params.productId);
+		}
 	}
 
 	return (
@@ -91,13 +118,7 @@ export default async function SingleProductPage({
 							</p>
 						</div>
 						<div className="mt-8">
-							<button
-								type="submit"
-								data-testId="add-to-cart-button"
-								className="inline-flex h-14 w-full items-center justify-center rounded-md from-[#1e4b65] from-20% via-[#010315] to-[#0b237d] to-80% px-6 text-base font-medium leading-6 text-white shadow transition duration-150 ease-in-out enabled:bg-gradient-to-r hover:enabled:brightness-125 disabled:cursor-wait disabled:bg-gray-300"
-							>
-								Add to cart
-							</button>
+							<AddToCartButton />
 						</div>
 					</div>
 				</form>
