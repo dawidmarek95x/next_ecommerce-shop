@@ -1,0 +1,16 @@
+fragment OrderSingleItem on OrderItem {
+	id
+	quantity
+	total
+	product {
+		id
+		name
+		price
+		categories {
+			name
+		}
+		images {
+			url
+		}
+	}
+}

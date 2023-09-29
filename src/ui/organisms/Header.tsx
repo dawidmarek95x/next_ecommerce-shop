@@ -16,7 +16,7 @@ export const Header = () => {
 							placeholder="Search"
 						/>
 						<CartBar />
-						<div className="ml-2 flex h-full w-14 items-center justify-center border-b-2 border-transparent text-center text-sm font-medium text-slate-500 hover:border-gray-300 hover:text-slate-700">
+						<div className="ml-2 flex h-full w-14 items-center justify-center border-b-2 border-transparent text-center text-sm font-medium text-slate-500 hover:border-gray-300 hover:text-sky-700">
 							<button>Sign In</button>
 						</div>
 					</div>
