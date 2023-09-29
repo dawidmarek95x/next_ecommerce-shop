@@ -30,6 +30,7 @@ export const ProductColorSelectionItem = ({
 					className="relative block h-6 w-6 appearance-none rounded-full checked:z-[1] checked:border-2"
 					style={{ background: colorVariant.color, borderColor: borderColor }}
 					value={colorVariant.slug}
+					// required={true}
 				/>
 			</div>
 		</li>

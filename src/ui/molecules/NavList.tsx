@@ -12,7 +12,7 @@ export const NavList = async () => {
 			href: `/categories/${category.slug}`,
 			label: category.name,
 			exact: false,
-		})) ?? null),
+		})) ?? []),
 	];
 
 	const linkClassNames =

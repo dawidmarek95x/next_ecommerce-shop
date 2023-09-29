@@ -1,0 +1,13 @@
+mutation CartUpdateById(
+	$id: ID!
+	$email: String
+	$total: Int
+	$stripeCheckoutId: String
+) {
+	updateOrder(
+		data: { email: $email, total: $total, stripeCheckoutId: $stripeCheckoutId }
+		where: { id: $id }
+	) {
+		...Cart
+	}
+}

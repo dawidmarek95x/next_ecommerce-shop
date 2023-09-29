@@ -23,8 +23,8 @@ export const getCollections = async ({
 	);
 
 	return {
-		data: collectionsApiResponse.collections,
-		totalResults: collectionsApiResponse.collectionsConnection.aggregate.count,
+		data: collectionsApiResponse?.collections,
+		totalResults: collectionsApiResponse?.collectionsConnection.aggregate.count,
 	};
 };
 
