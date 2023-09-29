@@ -8,14 +8,9 @@ import { ProductColorSelectionList } from "@/ui/organisms/ProductColorSelectionL
 import { SuggestedProductsList } from "@/ui/organisms/SuggestedProducts";
 import { Suspense } from "react";
 import { CheckCheckIcon } from "lucide-react";
-import { cookies } from "next/headers";
 import { AddToCartButton } from "@/ui/atoms/AddToCartButton";
-import {
-	addProductToCart,
-	createCart,
-	getCartByFromCookies,
-} from "@/lib/services/cart";
-import { CartFragment } from "@/gql/graphql";
+import { addProductToCart, getOrCreateCart } from "@/lib/services/cart";
+import { revalidateTag } from "next/cache";
 
 export const generateMetadata = async ({
 	params,
@@ -52,26 +47,13 @@ export default async function SingleProductPage({
 
 	async function addToCartAction(_formData: FormData) {
 		"use server";
-		let cart: CartFragment | null | undefined = undefined;
-		cart = await getCartByFromCookies();
-
-		if (!cart) {
-			const { createOrder: newCart } = await createCart();
-			const setNewCartDelay = setTimeout(() => {
-				cart = newCart;
-			}, 500);
-
-			clearTimeout(setNewCartDelay);
-		}
+		const cart = await getOrCreateCart();
 
 		if (cart) {
-			cookies().set("cartId", cart.id, {
-				httpOnly: true,
-				sameSite: "lax",
-			});
-
 			await addProductToCart(cart, params.productId);
 		}
+
+		revalidateTag("cart");
 	}
 
 	return (
