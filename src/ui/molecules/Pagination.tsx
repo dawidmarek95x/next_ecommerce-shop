@@ -7,12 +7,14 @@ export const Pagination = <T extends string>({
 	adjacentPageCount,
 	resultsPerPage,
 	basePath,
+	searchParams = {},
 }: {
 	totalResults: number;
 	currentPage: number;
 	adjacentPageCount: number;
 	resultsPerPage: number;
 	basePath: T;
+	searchParams?: { [s: string]: string | undefined };
 }) => {
 	const totalPages = Math.ceil(totalResults / resultsPerPage);
 	const startPage = Math.max(1, currentPage - adjacentPageCount);
@@ -22,6 +24,10 @@ export const Pagination = <T extends string>({
 	for (let i = startPage; i <= endPage; i++) {
 		pages.push(i);
 	}
+
+	const params = Object.entries(searchParams)
+		.map(([key, value]) => `${key}=${value}`)
+		.join("&");
 
 	return (
 		<nav
@@ -33,7 +39,11 @@ export const Pagination = <T extends string>({
 				{currentPage > 1 && (
 					<li className="me-2">
 						<ActiveLink
-							href={`${basePath}/${(currentPage - 1).toString()}` as Route<T>}
+							href={
+								`${basePath}/${(currentPage - 1).toString()}${
+									searchParams && `?${params}`
+								}` as Route<T>
+							}
 							className="rounded-md border border-sky-700 bg-sky-700 px-2 py-1 text-white hover:border-sky-500 hover:bg-sky-500"
 						>
 							Previous
@@ -43,7 +53,11 @@ export const Pagination = <T extends string>({
 				{pages.map((page, idx) => (
 					<li key={idx} className={`me-2 ${page === endPage && "me-0"}`}>
 						<ActiveLink
-							href={`${basePath}/${page.toString()}` as Route<T>}
+							href={
+								`${basePath}/${page.toString()}${
+									searchParams && `?${params}`
+								}` as Route<T>
+							}
 							className="rounded-md border border-sky-700 px-2 py-1 hover:bg-sky-700 hover:text-white"
 							activeClassName="bg-sky-700 text-white"
 							inactiveClassName="bg-white text-sky-700"
@@ -55,7 +69,11 @@ export const Pagination = <T extends string>({
 				{currentPage < totalPages && (
 					<li className="ms-2">
 						<ActiveLink
-							href={`${basePath}/${(currentPage + 1).toString()}` as Route<T>}
+							href={
+								`${basePath}/${(currentPage + 1).toString()}${
+									searchParams && `?${params}`
+								}` as Route<T>
+							}
 							className="rounded-md border border-sky-700 bg-sky-700 px-2 py-1 text-white hover:border-sky-500 hover:bg-sky-500"
 						>
 							Next

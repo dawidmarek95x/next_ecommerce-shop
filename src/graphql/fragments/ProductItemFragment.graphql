@@ -11,4 +11,8 @@ fragment ProductItem on Product {
 	images(first: 1) {
 		url
 	}
+	reviews {
+		id
+		rating
+	}
 }

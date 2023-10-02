@@ -2,6 +2,7 @@ import { Poppins } from "next/font/google";
 import type { Metadata } from "next";
 import "./globals.scss";
 import { Header } from "@/ui/organisms/Header";
+import { Footer } from "@/ui/organisms/Footer";
 
 const poppins = Poppins({
 	weight: ["400", "500", "600", "700"],
@@ -18,17 +19,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
 	children,
-}: {
+} // modal,
+: {
 	children: React.ReactNode;
+	// modal: React.ReactNode;
 }) {
 	return (
 		<html lang="en">
 			<body className={poppins.className}>
 				<Header />
 				<main className="mb-6">{children}</main>
-				<footer>
-					<p className="py-5 text-center text-sm text-gray-500">© 2023</p>
-				</footer>
+				<Footer />
+				{/* {modal} */}
 			</body>
 		</html>
 	);

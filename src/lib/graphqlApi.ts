@@ -7,6 +7,7 @@ export const executeGraphQL = async <TResult, TVariables>(
 	variables: TVariables,
 	options?: {
 		isMutation?: boolean;
+		headers?: HeadersInit;
 		next?: NextFetchRequestConfig;
 		cache?: RequestCache;
 	},
@@ -28,6 +29,7 @@ export const executeGraphQL = async <TResult, TVariables>(
 					? process.env.NEXT_PUBLIC_MUTATION_TOKEN
 					: process.env.NEXT_PUBLIC_QUERY_TOKEN
 			}`,
+			...options?.headers,
 		},
 		next: options?.next,
 		cache: options?.cache,

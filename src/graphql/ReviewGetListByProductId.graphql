@@ -1,0 +1,14 @@
+query ReviewGetListByProductId($limit: Int, $offset: Int, $productId: ID!) {
+	reviews(
+		first: $limit
+		skip: $offset
+		where: { product: { id: $productId } }
+	) {
+		...ReviewItem
+	}
+	reviewsConnection(where: { product: { id: $productId } }) {
+		aggregate {
+			count
+		}
+	}
+}

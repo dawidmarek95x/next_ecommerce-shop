@@ -1,15 +1,29 @@
 import {
+	InputMaybe,
 	ProductGetByIdDocument,
+	ProductOrderByInput,
 	ProductsGetByCategorySlugDocument,
 	ProductsGetByCollectionSlugDocument,
 	ProductsGetBySearchedNameDocument,
 	ProductsGetListDocument,
 } from "@/gql/graphql";
 import { executeGraphQL } from "../graphqlApi";
+import { AVAILABLE_SORT_OPTIONS } from "../data/productSortOptions";
+import { calculateAverageRating } from "@/utils/calculateAverageRating";
+import { filterDataWithLimitAndOffset } from "@/utils/filterDataWithLimitAndOffset";
 
 interface GetProductsSearchParams {
 	limit?: number;
 	offset?: number;
+}
+
+type OrderByRating = "rating_ASC" | "rating_DESC";
+export type GetProductsListOrderBy =
+	| InputMaybe<ProductOrderByInput>
+	| OrderByRating;
+
+interface GetProductsListSearchParams extends GetProductsSearchParams {
+	orderBy?: GetProductsListOrderBy;
 }
 
 interface GetProductsByCategorySlugSearchParams
@@ -30,16 +44,70 @@ interface GetProductsBySearchedNameSearchParams
 export const getProducts = async ({
 	limit = 20,
 	offset = 0,
-}: GetProductsSearchParams) => {
-	const productsApiResponse = await executeGraphQL(ProductsGetListDocument, {
-		limit,
-		offset,
-	});
+	orderBy,
+}: GetProductsListSearchParams) => {
+	if (!AVAILABLE_SORT_OPTIONS.includes(orderBy ?? "")) {
+		orderBy = undefined;
+	}
 
-	return {
-		data: productsApiResponse?.products,
-		totalResults: productsApiResponse?.productsConnection.aggregate.count,
-	};
+	if (!["rating_ASC", "rating_DESC"].includes(orderBy ?? "")) {
+		const productsApiResponse = await executeGraphQL(
+			ProductsGetListDocument,
+			{
+				limit,
+				offset,
+				orderBy: orderBy as InputMaybe<ProductOrderByInput> | undefined,
+			},
+			{
+				next: {
+					revalidate: 15,
+				},
+			},
+		);
+
+		return {
+			data: productsApiResponse?.products,
+			totalResults: productsApiResponse?.productsConnection.aggregate.count,
+		};
+	} else {
+		const productsApiResponse = await executeGraphQL(
+			ProductsGetListDocument,
+			{},
+			{
+				next: {
+					revalidate: 15,
+				},
+			},
+		);
+
+		return {
+			data: filterDataWithLimitAndOffset(
+				productsApiResponse?.products
+					.map((product) => ({
+						...product,
+						averageRating: calculateAverageRating(product.reviews),
+					}))
+					.sort((a, b) => {
+						switch (orderBy) {
+							case "rating_ASC":
+								return a.averageRating - b.averageRating;
+
+							case "rating_DESC":
+								return b.averageRating - a.averageRating;
+
+							default:
+								return b.averageRating - a.averageRating;
+						}
+					})
+					.map((product) => {
+						const { averageRating, ...originalProduct } = product;
+						return originalProduct;
+					}),
+				{ limit, offset },
+			),
+			totalResults: productsApiResponse?.productsConnection.aggregate.count,
+		};
+	}
 };
 
 export const getProductsByCategorySlug = async ({
@@ -50,6 +118,12 @@ export const getProductsByCategorySlug = async ({
 	const productsApiResponse = await executeGraphQL(
 		ProductsGetByCategorySlugDocument,
 		{ limit, offset, categorySlug },
+		{
+			next: {
+				revalidate: 15,
+				tags: ["products"],
+			},
+		},
 	);
 
 	return {
@@ -66,6 +140,12 @@ export const getProductsByCollectionSlug = async ({
 	const productsApiResponse = await executeGraphQL(
 		ProductsGetByCollectionSlugDocument,
 		{ limit, offset, collectionSlug },
+		{
+			next: {
+				revalidate: 15,
+				tags: ["products"],
+			},
+		},
 	);
 
 	return {
@@ -82,6 +162,12 @@ export const getProductsBySearchedName = async ({
 	const productsApiResponse = await executeGraphQL(
 		ProductsGetBySearchedNameDocument,
 		{ limit, offset, searchedName },
+		{
+			next: {
+				revalidate: 15,
+				tags: ["products"],
+			},
+		},
 	);
 
 	return {
@@ -91,9 +177,18 @@ export const getProductsBySearchedName = async ({
 };
 
 export const getProductById = async (id: string) => {
-	const productApiResponse = await executeGraphQL(ProductGetByIdDocument, {
-		id,
-	});
+	const productApiResponse = await executeGraphQL(
+		ProductGetByIdDocument,
+		{
+			id,
+		},
+		{
+			cache: "no-cache",
+			next: {
+				tags: ["products"],
+			},
+		},
+	);
 
 	if (!productApiResponse?.product) {
 		return null;

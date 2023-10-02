@@ -5,10 +5,12 @@ import { Loader } from "../atoms/Loader";
 
 interface CartProductListProps extends HTMLAttributes<HTMLUListElement> {
 	cart: CartFragment;
+	isModal: boolean;
 }
 
 export async function CartProductList({
 	cart,
+	isModal,
 	...props
 }: CartProductListProps) {
 	return (
@@ -21,7 +23,11 @@ export async function CartProductList({
 				{cart.orderItems.map(
 					(orderItem) =>
 						orderItem?.product && (
-							<CartProductItem key={orderItem.id} orderItem={orderItem} />
+							<CartProductItem
+								key={orderItem.id}
+								orderItem={orderItem}
+								isModal={isModal}
+							/>
 						),
 				)}
 			</ul>

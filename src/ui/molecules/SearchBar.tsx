@@ -1,5 +1,5 @@
 import { SearchInput } from "../atoms/SearchInput";
-import { SearchIcon } from "../icons/SearchIcon";
+import { Search as SearchIcon } from "lucide-react";
 
 interface SearchBarProps {
 	id: string;

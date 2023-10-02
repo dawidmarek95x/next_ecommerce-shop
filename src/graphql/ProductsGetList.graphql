@@ -1,5 +1,9 @@
-query ProductsGetList($limit: Int, $offset: Int) {
-	products(first: $limit, skip: $offset) {
+query ProductsGetList(
+	$limit: Int
+	$offset: Int
+	$orderBy: ProductOrderByInput
+) {
+	products(first: $limit, skip: $offset, orderBy: $orderBy) {
 		...ProductItem
 	}
 	productsConnection {

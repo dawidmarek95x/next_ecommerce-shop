@@ -29,7 +29,12 @@ export const ActiveLink = <T extends string>({
 }) => {
 	const pathname = usePathname();
 
-	const matchedPath = (typeof href === "string" ? href : href.pathname) ?? null;
+	const matchedPath =
+		(typeof href === "string"
+			? href.includes("?")
+				? href.split("?")[0]
+				: href
+			: href.pathname) ?? null;
 
 	const isActive =
 		(matchedPath &&

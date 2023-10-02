@@ -1,0 +1,6 @@
+fragment ProductItemFull on Product {
+	...ProductItem
+	...ProductColorVariants
+	...ProductSizeVariants
+	...ProductReviews
+}
