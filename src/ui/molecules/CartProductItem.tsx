@@ -7,10 +7,12 @@ import { RemoveOrderItemButton } from "../atoms/RemoveOrderItemButton";
 
 interface CartProductItemProps extends HTMLAttributes<HTMLLIElement> {
 	orderItem: OrderSingleItemFragment;
+	isModal: boolean;
 }
 
 export async function CartProductItem({
 	orderItem,
+	isModal,
 	...props
 }: CartProductItemProps) {
 	return (
@@ -31,10 +33,17 @@ export async function CartProductItem({
 					category={orderItem.product?.categories?.[0]?.name ?? ""}
 					price={orderItem.product?.price ?? 0}
 				/>
-				<div className="mx-auto mt-4 sm:mx-0">
-					<ProductQuantityCounter orderItem={orderItem} />
-					<RemoveOrderItemButton orderItem={orderItem} />
-				</div>
+
+				{!isModal ? (
+					<div className="mx-auto mt-4 sm:mx-0">
+						<ProductQuantityCounter orderItem={orderItem} />
+						<RemoveOrderItemButton orderItem={orderItem} />
+					</div>
+				) : (
+					<div className="mx-auto mt-4 sm:mx-0">
+						Quantity: {orderItem.quantity}
+					</div>
+				)}
 			</div>
 		</li>
 	);

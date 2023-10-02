@@ -5,10 +5,10 @@ import {
 	CartGetByIdDocument,
 	CartUpdateByIdDocument,
 	CartUpdateOrderItemByIdDocument,
-	ProductGetByIdDocument,
 } from "@/gql/graphql";
 import { cookies } from "next/headers";
 import { executeGraphQL } from "../graphqlApi";
+import { getProductById } from "./products";
 
 export async function getOrCreateCart(): Promise<CartFragment | undefined> {
 	let cart: CartFragment | undefined = undefined;
@@ -48,7 +48,10 @@ export async function createCart() {
 	const { createOrder: cart } = await executeGraphQL(
 		CartCreateDocument,
 		{},
-		{ isMutation: true },
+		{
+			isMutation: true,
+			cache: "no-cache",
+		},
 	);
 
 	if (cart) {
@@ -62,9 +65,7 @@ export async function createCart() {
 }
 
 export async function addProductToCart(cart: CartFragment, productId: string) {
-	const { product } = await executeGraphQL(ProductGetByIdDocument, {
-		id: productId,
-	});
+	const product = await getProductById(productId);
 
 	if (!product) {
 		return;
@@ -85,6 +86,7 @@ export async function addProductToCart(cart: CartFragment, productId: string) {
 			},
 			{
 				isMutation: true,
+				cache: "no-cache",
 			},
 		);
 
@@ -100,7 +102,10 @@ export async function addProductToCart(cart: CartFragment, productId: string) {
 				quantity: 1,
 				total: product.price,
 			},
-			{ isMutation: true },
+			{
+				isMutation: true,
+				cache: "no-cache",
+			},
 		);
 
 		if (createOrderItem) {
@@ -117,6 +122,7 @@ export async function addProductToCart(cart: CartFragment, productId: string) {
 			},
 			{
 				isMutation: true,
+				cache: "no-cache",
 			},
 		);
 	}
