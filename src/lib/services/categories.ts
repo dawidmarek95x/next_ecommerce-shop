@@ -23,6 +23,11 @@ export const getCategories = async ({
 			limit,
 			offset,
 		},
+		{
+			next: {
+				revalidate: 15,
+			},
+		},
 	);
 
 	return {
@@ -37,6 +42,11 @@ export const getCategoryBySlug = async ({
 	const categoriesApiResponse = await executeGraphQL(
 		CategoriesGetBySlugDocument,
 		{ limit: 1, offset: 0, slug },
+		{
+			next: {
+				revalidate: 15,
+			},
+		},
 	);
 
 	return categoriesApiResponse?.categories?.[0];

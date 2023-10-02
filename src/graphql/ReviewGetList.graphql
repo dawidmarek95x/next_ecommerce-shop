@@ -1,0 +1,10 @@
+query ReviewGetList($limit: Int, $offset: Int) {
+	reviews(first: $limit, skip: $offset) {
+		...ReviewItem
+	}
+	reviewsConnection {
+		aggregate {
+			count
+		}
+	}
+}

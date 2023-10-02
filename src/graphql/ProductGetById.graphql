@@ -3,5 +3,6 @@ query ProductGetById($id: ID!) {
 		...ProductItem
 		...ProductColorVariants
 		...ProductSizeVariants
+		...ProductReviews
 	}
 }

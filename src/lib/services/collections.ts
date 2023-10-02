@@ -20,6 +20,11 @@ export const getCollections = async ({
 	const collectionsApiResponse = await executeGraphQL(
 		CollectionsGetListDocument,
 		{ limit, offset },
+		{
+			next: {
+				revalidate: 15,
+			},
+		},
 	);
 
 	return {
@@ -34,6 +39,11 @@ export const getCollectionBySlug = async ({
 	const collectionApiResponse = await executeGraphQL(
 		CollectionsGetBySlugDocument,
 		{ limit: 1, offset: 0, slug },
+		{
+			next: {
+				revalidate: 15,
+			},
+		},
 	);
 
 	return collectionApiResponse?.collections?.[0];
