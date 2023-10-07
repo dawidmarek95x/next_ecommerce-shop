@@ -8,13 +8,15 @@ export default authMiddleware({
 	publicRoutes: [
 		"/",
 		"/cart",
-		"/categories/:categorySlug",
-		"/categories/:categorySlug/:pageNumber",
-		"/collections/:collectionSlug",
-		"/collections/:collectionSlug/:pageNumber",
-		"/product/:productId",
+		// @ts-ignore
+		"/categories/(.*)",
+		// @ts-ignore
+		"/collections/(.*)",
+		// @ts-ignore
+		"/product/(.*)",
 		"/products",
-		"/products/:pageNumber",
+		// @ts-ignore
+		"/products/(.*)",
 		"/search",
 	],
 });
