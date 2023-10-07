@@ -1,5 +1,6 @@
 fragment Cart on Order {
 	id
+	userId
 	email
 	total
 	stripeCheckoutId
@@ -19,4 +20,5 @@ fragment Cart on Order {
 			}
 		}
 	}
+	createdAt
 }
