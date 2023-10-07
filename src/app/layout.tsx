@@ -1,6 +1,7 @@
 import { Poppins } from "next/font/google";
 import type { Metadata } from "next";
 import "./globals.scss";
+import { ClerkProvider } from "@clerk/nextjs";
 import { Header } from "@/ui/organisms/Header";
 import { Footer } from "@/ui/organisms/Footer";
 
@@ -18,20 +19,21 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-	children,
-} // modal,
-: {
+	children, // modal,
+}: {
 	children: React.ReactNode;
 	// modal: React.ReactNode;
 }) {
 	return (
-		<html lang="en">
-			<body className={poppins.className}>
-				<Header />
-				<main className="mb-6">{children}</main>
-				<Footer />
-				{/* {modal} */}
-			</body>
-		</html>
+		<ClerkProvider>
+			<html lang="en">
+				<body className={poppins.className}>
+					<Header />
+					<main className="mb-6">{children}</main>
+					<Footer />
+					{/* {modal} */}
+				</body>
+			</html>
+		</ClerkProvider>
 	);
 }

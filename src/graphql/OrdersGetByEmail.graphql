@@ -1,0 +1,10 @@
+query OrdersGetByEmail($email: String!) {
+	orders(where: { email: $email }, orderBy: createdAt_DESC, stage: DRAFT) {
+		...Cart
+	}
+	ordersConnection(where: { email: $email }, stage: DRAFT) {
+		aggregate {
+			count
+		}
+	}
+}
