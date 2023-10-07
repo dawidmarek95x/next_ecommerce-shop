@@ -42,6 +42,8 @@ export const ActiveLink = <T extends string>({
 			(exact ? pathname === matchedPath : pathname.startsWith(matchedPath))) ||
 		false;
 
+	const ariaCurrent = isActive ? "page" : undefined;
+
 	return (
 		<Link
 			className={clsx(
@@ -53,6 +55,7 @@ export const ActiveLink = <T extends string>({
 			replace={replace}
 			prefetch={prefetch}
 			role="link"
+			aria-current={ariaCurrent}
 		>
 			{children}
 		</Link>

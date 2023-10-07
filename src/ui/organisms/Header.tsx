@@ -1,8 +1,18 @@
 import { SearchBar } from "../molecules/SearchBar";
 import { NavBar } from "../molecules/NavBar";
 import { CartBar } from "../molecules/CartBar";
+import {
+	SignInButton,
+	SignedIn,
+	SignedOut,
+	UserButton,
+	currentUser,
+} from "@clerk/nextjs";
+import { OrdersBar } from "../molecules/OrdersBar";
 
-export const Header = () => {
+export async function Header() {
+	const user = await currentUser();
+
 	return (
 		<header className="sticky top-0 z-20 border-b bg-white bg-opacity-60 backdrop-blur-lg">
 			<div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
@@ -16,12 +26,18 @@ export const Header = () => {
 							placeholder="Search"
 						/>
 						<CartBar />
+						{user && <OrdersBar />}
 						<div className="ml-2 flex h-full w-14 items-center justify-center border-b-2 border-transparent text-center text-sm font-medium text-slate-500 hover:border-gray-300 hover:text-sky-700">
-							<button>Sign In</button>
+							<SignedIn>
+								<UserButton afterSignOutUrl="/" />
+							</SignedIn>
+							<SignedOut>
+								<SignInButton />
+							</SignedOut>
 						</div>
 					</div>
 				</div>
 			</div>
 		</header>
 	);
-};
+}

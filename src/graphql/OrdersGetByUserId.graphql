@@ -1,0 +1,10 @@
+query OrdersGetByUserId($userId: String!) {
+	orders(where: { userId: $userId }, orderBy: createdAt_DESC, stage: DRAFT) {
+		...Cart
+	}
+	ordersConnection(where: { userId: $userId }, stage: DRAFT) {
+		aggregate {
+			count
+		}
+	}
+}

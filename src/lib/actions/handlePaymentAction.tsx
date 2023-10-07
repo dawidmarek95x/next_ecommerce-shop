@@ -1,10 +1,15 @@
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
 import { getCartByFromCookies } from "../services/cart";
+import { currentUser } from "@clerk/nextjs";
+import { CartUpdateByIdDocument } from "@/gql/graphql";
+import { executeGraphQL } from "../graphqlApi";
+import { cookies } from "next/headers";
+import { revalidateTag } from "next/cache";
 
 const USD_TO_PLN_RATE = 4.4;
 
-export async function handleStripePaymentAction(_formData: FormData) {
+export async function handleStripePaymentAction(formData: FormData) {
 	"use server";
 
 	if (!process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY) {
@@ -50,7 +55,32 @@ export async function handleStripePaymentAction(_formData: FormData) {
 		// cancel_url: "https://next-ecommerce-shop.vercel.app/cart/cancel",
 	});
 
+	const user = await currentUser();
+	const userId = user?.id;
+	const userEmail = user?.emailAddresses[0]?.emailAddress;
+	let email = formData.get("email")?.toString();
+
+	if (userEmail) {
+		email = userEmail;
+	}
+
+	await executeGraphQL(
+		CartUpdateByIdDocument,
+		{
+			id: cart.id,
+			userId,
+			email,
+			stripeCheckoutId: checkoutSession.id,
+		},
+		{
+			isMutation: true,
+			cache: "no-cache",
+		},
+	);
+
 	if (checkoutSession.url) {
+		cookies().delete("cartId");
+		revalidateTag("cart");
 		redirect(checkoutSession.url);
 	}
 }

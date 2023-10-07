@@ -5,6 +5,8 @@ import {
 	CartGetByIdDocument,
 	CartUpdateByIdDocument,
 	CartUpdateOrderItemByIdDocument,
+	OrdersGetByEmailDocument,
+	OrdersGetByUserIdDocument,
 } from "@/gql/graphql";
 import { cookies } from "next/headers";
 import { executeGraphQL } from "../graphqlApi";
@@ -126,4 +128,44 @@ export async function addProductToCart(cart: CartFragment, productId: string) {
 			},
 		);
 	}
+}
+
+export async function getOrdersByUserId(userId: string) {
+	const ordersApiResponse = await executeGraphQL(
+		OrdersGetByUserIdDocument,
+		{
+			userId: userId,
+		},
+		{
+			cache: "no-cache",
+			next: {
+				tags: ["cart"],
+			},
+		},
+	);
+
+	return {
+		data: ordersApiResponse?.orders,
+		totalResults: ordersApiResponse?.ordersConnection.aggregate.count,
+	};
+}
+
+export async function getOrdersByEmail(email: string) {
+	const ordersApiResponse = await executeGraphQL(
+		OrdersGetByEmailDocument,
+		{
+			email,
+		},
+		{
+			cache: "no-cache",
+			next: {
+				tags: ["cart"],
+			},
+		},
+	);
+
+	return {
+		data: ordersApiResponse?.orders,
+		totalResults: ordersApiResponse?.ordersConnection?.aggregate?.count,
+	};
 }

@@ -4523,6 +4523,7 @@ export type Order = Node & {
   updatedAt: Scalars['DateTime']['output'];
   /** User that last updated this document */
   updatedBy?: Maybe<User>;
+  userId?: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -4605,6 +4606,7 @@ export type OrderCreateInput = {
   stripeCheckoutId?: InputMaybe<Scalars['String']['input']>;
   total: Scalars['Int']['input'];
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type OrderCreateManyInlineInput = {
@@ -5244,6 +5246,25 @@ export type OrderManyWhereInput = {
   /** All values that are not contained in given list. */
   updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   updatedBy?: InputMaybe<UserWhereInput>;
+  userId?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  userId_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  userId_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  userId_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  userId_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  userId_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  userId_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  userId_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  userId_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  userId_starts_with?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type OrderOrderByInput =
@@ -5260,13 +5281,16 @@ export type OrderOrderByInput =
   | 'total_ASC'
   | 'total_DESC'
   | 'updatedAt_ASC'
-  | 'updatedAt_DESC';
+  | 'updatedAt_DESC'
+  | 'userId_ASC'
+  | 'userId_DESC';
 
 export type OrderUpdateInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   orderItems?: InputMaybe<OrderItemUpdateManyInlineInput>;
   stripeCheckoutId?: InputMaybe<Scalars['String']['input']>;
   total?: InputMaybe<Scalars['Int']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type OrderUpdateManyInlineInput = {
@@ -5290,6 +5314,7 @@ export type OrderUpdateManyInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   stripeCheckoutId?: InputMaybe<Scalars['String']['input']>;
   total?: InputMaybe<Scalars['Int']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type OrderUpdateManyWithNestedWhereInput = {
@@ -5480,6 +5505,25 @@ export type OrderWhereInput = {
   /** All values that are not contained in given list. */
   updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   updatedBy?: InputMaybe<UserWhereInput>;
+  userId?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  userId_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  userId_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  userId_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  userId_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  userId_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  userId_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  userId_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  userId_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  userId_starts_with?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The document in stages filter allows specifying a stage entry to cross compare the same document between different stages */
@@ -10802,7 +10846,7 @@ export type CartAddOrderItemMutation = { createOrderItem?: { id: string, quantit
 export type CartCreateMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CartCreateMutation = { createOrder?: { id: string, email?: string | null, total: number, stripeCheckoutId?: string | null, orderItems: Array<{ id: string, quantity: number, total: number, product?: { id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> } | null }> } | null };
+export type CartCreateMutation = { createOrder?: { id: string, userId?: string | null, email?: string | null, total: number, stripeCheckoutId?: string | null, createdAt: unknown, orderItems: Array<{ id: string, quantity: number, total: number, product?: { id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> } | null }> } | null };
 
 export type CartDeleteOrderItemByIdMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -10816,17 +10860,18 @@ export type CartGetByIdQueryVariables = Exact<{
 }>;
 
 
-export type CartGetByIdQuery = { order?: { id: string, email?: string | null, total: number, stripeCheckoutId?: string | null, orderItems: Array<{ id: string, quantity: number, total: number, product?: { id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> } | null }> } | null };
+export type CartGetByIdQuery = { order?: { id: string, userId?: string | null, email?: string | null, total: number, stripeCheckoutId?: string | null, createdAt: unknown, orderItems: Array<{ id: string, quantity: number, total: number, product?: { id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> } | null }> } | null };
 
 export type CartUpdateByIdMutationVariables = Exact<{
   id: Scalars['ID']['input'];
+  userId?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
   total?: InputMaybe<Scalars['Int']['input']>;
   stripeCheckoutId?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type CartUpdateByIdMutation = { updateOrder?: { id: string, email?: string | null, total: number, stripeCheckoutId?: string | null, orderItems: Array<{ id: string, quantity: number, total: number, product?: { id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> } | null }> } | null };
+export type CartUpdateByIdMutation = { updateOrder?: { id: string, userId?: string | null, email?: string | null, total: number, stripeCheckoutId?: string | null, createdAt: unknown, orderItems: Array<{ id: string, quantity: number, total: number, product?: { id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> } | null }> } | null };
 
 export type CartUpdateOrderItemByIdMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']['input']>;
@@ -10870,6 +10915,20 @@ export type CollectionsGetListQueryVariables = Exact<{
 
 
 export type CollectionsGetListQuery = { collections: Array<{ id: string, name: string, slug: string, description?: string | null, image: { url: string } }>, collectionsConnection: { aggregate: { count: number } } };
+
+export type OrdersGetByEmailQueryVariables = Exact<{
+  email: Scalars['String']['input'];
+}>;
+
+
+export type OrdersGetByEmailQuery = { orders: Array<{ id: string, userId?: string | null, email?: string | null, total: number, stripeCheckoutId?: string | null, createdAt: unknown, orderItems: Array<{ id: string, quantity: number, total: number, product?: { id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> } | null }> }>, ordersConnection: { aggregate: { count: number } } };
+
+export type OrdersGetByUserIdQueryVariables = Exact<{
+  userId: Scalars['String']['input'];
+}>;
+
+
+export type OrdersGetByUserIdQuery = { orders: Array<{ id: string, userId?: string | null, email?: string | null, total: number, stripeCheckoutId?: string | null, createdAt: unknown, orderItems: Array<{ id: string, quantity: number, total: number, product?: { id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> } | null }> }>, ordersConnection: { aggregate: { count: number } } };
 
 export type ProductGetByIdQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -10943,7 +11002,7 @@ export type ReviewGetListByProductIdQueryVariables = Exact<{
 
 export type ReviewGetListByProductIdQuery = { reviews: Array<{ id: string, headline: string, content: string, rating: number, name: string, email: string, product?: { id: string } | null }>, reviewsConnection: { aggregate: { count: number } } };
 
-export type CartFragment = { id: string, email?: string | null, total: number, stripeCheckoutId?: string | null, orderItems: Array<{ id: string, quantity: number, total: number, product?: { id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> } | null }> };
+export type CartFragment = { id: string, userId?: string | null, email?: string | null, total: number, stripeCheckoutId?: string | null, createdAt: unknown, orderItems: Array<{ id: string, quantity: number, total: number, product?: { id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> } | null }> };
 
 export type CategoryItemFragment = { id: string, name: string, slug: string, description?: string | null };
 
@@ -10980,6 +11039,7 @@ export class TypedDocumentString<TResult, TVariables>
 export const CartFragmentDoc = new TypedDocumentString(`
     fragment Cart on Order {
   id
+  userId
   email
   total
   stripeCheckoutId
@@ -10999,6 +11059,7 @@ export const CartFragmentDoc = new TypedDocumentString(`
       }
     }
   }
+  createdAt
 }
     `, {"fragmentName":"Cart"}) as unknown as TypedDocumentString<CartFragment, unknown>;
 export const CategoryItemFragmentDoc = new TypedDocumentString(`
@@ -11174,6 +11235,7 @@ export const CartCreateDocument = new TypedDocumentString(`
 }
     fragment Cart on Order {
   id
+  userId
   email
   total
   stripeCheckoutId
@@ -11193,6 +11255,7 @@ export const CartCreateDocument = new TypedDocumentString(`
       }
     }
   }
+  createdAt
 }`) as unknown as TypedDocumentString<CartCreateMutation, CartCreateMutationVariables>;
 export const CartDeleteOrderItemByIdDocument = new TypedDocumentString(`
     mutation CartDeleteOrderItemById($id: ID!) {
@@ -11212,6 +11275,7 @@ export const CartGetByIdDocument = new TypedDocumentString(`
 }
     fragment Cart on Order {
   id
+  userId
   email
   total
   stripeCheckoutId
@@ -11231,11 +11295,12 @@ export const CartGetByIdDocument = new TypedDocumentString(`
       }
     }
   }
+  createdAt
 }`) as unknown as TypedDocumentString<CartGetByIdQuery, CartGetByIdQueryVariables>;
 export const CartUpdateByIdDocument = new TypedDocumentString(`
-    mutation CartUpdateById($id: ID!, $email: String, $total: Int, $stripeCheckoutId: String) {
+    mutation CartUpdateById($id: ID!, $userId: String, $email: String, $total: Int, $stripeCheckoutId: String) {
   updateOrder(
-    data: {email: $email, total: $total, stripeCheckoutId: $stripeCheckoutId}
+    data: {userId: $userId, email: $email, total: $total, stripeCheckoutId: $stripeCheckoutId}
     where: {id: $id}
   ) {
     ...Cart
@@ -11243,6 +11308,7 @@ export const CartUpdateByIdDocument = new TypedDocumentString(`
 }
     fragment Cart on Order {
   id
+  userId
   email
   total
   stripeCheckoutId
@@ -11262,6 +11328,7 @@ export const CartUpdateByIdDocument = new TypedDocumentString(`
       }
     }
   }
+  createdAt
 }`) as unknown as TypedDocumentString<CartUpdateByIdMutation, CartUpdateByIdMutationVariables>;
 export const CartUpdateOrderItemByIdDocument = new TypedDocumentString(`
     mutation CartUpdateOrderItemById($id: ID, $quantity: Int!, $total: Int!) {
@@ -11349,6 +11416,76 @@ export const CollectionsGetListDocument = new TypedDocumentString(`
     url
   }
 }`) as unknown as TypedDocumentString<CollectionsGetListQuery, CollectionsGetListQueryVariables>;
+export const OrdersGetByEmailDocument = new TypedDocumentString(`
+    query OrdersGetByEmail($email: String!) {
+  orders(where: {email: $email}, orderBy: createdAt_DESC, stage: DRAFT) {
+    ...Cart
+  }
+  ordersConnection(where: {email: $email}, stage: DRAFT) {
+    aggregate {
+      count
+    }
+  }
+}
+    fragment Cart on Order {
+  id
+  userId
+  email
+  total
+  stripeCheckoutId
+  orderItems {
+    id
+    quantity
+    total
+    product {
+      id
+      name
+      price
+      categories {
+        name
+      }
+      images {
+        url
+      }
+    }
+  }
+  createdAt
+}`) as unknown as TypedDocumentString<OrdersGetByEmailQuery, OrdersGetByEmailQueryVariables>;
+export const OrdersGetByUserIdDocument = new TypedDocumentString(`
+    query OrdersGetByUserId($userId: String!) {
+  orders(where: {userId: $userId}, orderBy: createdAt_DESC, stage: DRAFT) {
+    ...Cart
+  }
+  ordersConnection(where: {userId: $userId}, stage: DRAFT) {
+    aggregate {
+      count
+    }
+  }
+}
+    fragment Cart on Order {
+  id
+  userId
+  email
+  total
+  stripeCheckoutId
+  orderItems {
+    id
+    quantity
+    total
+    product {
+      id
+      name
+      price
+      categories {
+        name
+      }
+      images {
+        url
+      }
+    }
+  }
+  createdAt
+}`) as unknown as TypedDocumentString<OrdersGetByUserIdQuery, OrdersGetByUserIdQueryVariables>;
 export const ProductGetByIdDocument = new TypedDocumentString(`
     query ProductGetById($id: ID!) {
   product(where: {id: $id}) {

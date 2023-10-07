@@ -1,11 +1,17 @@
 mutation CartUpdateById(
 	$id: ID!
+	$userId: String
 	$email: String
 	$total: Int
 	$stripeCheckoutId: String
 ) {
 	updateOrder(
-		data: { email: $email, total: $total, stripeCheckoutId: $stripeCheckoutId }
+		data: {
+			userId: $userId
+			email: $email
+			total: $total
+			stripeCheckoutId: $stripeCheckoutId
+		}
 		where: { id: $id }
 	) {
 		...Cart
