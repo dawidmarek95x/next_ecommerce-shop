@@ -16,7 +16,7 @@ export default async function CartPage() {
 				Shopping Cart
 			</h1>
 
-			<form action={handleStripePaymentAction}>
+			<form>
 				<div>
 					<h2 className="sr-only">Products in your shopping cart</h2>
 					{cart?.orderItems && cart?.orderItems?.length > 0 ? (
@@ -27,23 +27,25 @@ export default async function CartPage() {
 						</p>
 					)}
 				</div>
-				<div className="mt-5">
-					<div className="rounded-lg bg-gray-50 p-4">
-						<h2 className="sr-only">Order summary</h2>
-						<div className="text-sm">
-							<div className="flex items-center justify-between py-4">
-								<div>
-									<p className="text-slate-900">Total order</p>
-									<p className="mt-1 text-sm text-slate-500">
-										Shipping and taxes will be calculated at the next step
-									</p>
-								</div>
-								<p className="small-caps ml-1 text-base font-semibold text-slate-900">
-									{formatMoney((cart?.total ?? 0) / 100)}
+			</form>
+			<div className="mt-5">
+				<div className="rounded-lg bg-gray-50 p-4">
+					<h2 className="sr-only">Order summary</h2>
+					<div className="text-sm">
+						<div className="flex items-center justify-between py-4">
+							<div>
+								<p className="text-slate-900">Total order</p>
+								<p className="mt-1 text-sm text-slate-500">
+									Shipping and taxes will be calculated at the next step
 								</p>
 							</div>
+							<p className="small-caps ml-1 text-base font-semibold text-slate-900">
+								{formatMoney((cart?.total ?? 0) / 100)}
+							</p>
 						</div>
 					</div>
+				</div>
+				<form action={handleStripePaymentAction}>
 					<div className="mt-5 flex justify-end">
 						{!userId && (
 							<label className="me-2 w-1/2 md:w-1/3">
@@ -66,8 +68,8 @@ export default async function CartPage() {
 							Checkout
 						</button>
 					</div>
-				</div>
-			</form>
+				</form>
+			</div>
 
 			<div className="mt-5 text-center ">
 				<Link
